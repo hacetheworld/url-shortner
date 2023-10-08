@@ -1,10 +1,10 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect,render_template
 import string
 import random
 
 app = Flask(__name__)
 
-# Initialize a dictionary to store URL mappings (short_code -> long_url)
+# store all the short url by {shorturl:long_url}
 url_mappings = {}
 
 @app.route('/', methods=['GET', 'POST'])
@@ -15,12 +15,7 @@ def index():
         store_mapping(short_code, long_url)
         short_url = request.host_url + short_code
         return f'Short URL: <a href="{short_url}">{short_url}</a>'
-    return '''
-    <form method="POST">
-        Long URL: <input type="text" name="long_url">
-        <input type="submit" value="Shorten">
-    </form>
-    '''
+    return render_template("index.html")
 
 
 
